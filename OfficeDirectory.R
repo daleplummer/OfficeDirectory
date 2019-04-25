@@ -8,8 +8,8 @@ print(od)
 ui <- fluidPage(
 	titlePanel("Welcome to the Department of Biostatistics", windowTitle = "Office Directory"),
 	fluidRow(
-		column(3,h3("Need directions?"),uiOutput("nameOutput")),
-		column(5,tableOutput("results"))
+		column(width=5,h4(uiOutput("nameOutput"))),
+		column(width=6,h4(tableOutput("results")))
 	),
 	#hr(),
 	plotOutput("pic1")
