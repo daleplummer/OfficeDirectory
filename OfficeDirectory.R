@@ -4,19 +4,22 @@ library(dplyr)
 # file has columns: id, name, location, phone
 od <- read.csv("OfficeDirectory.csv", stringsAsFactors = FALSE)
 print(od)
-
+#
+# ui
+#
 ui <- fluidPage(
-	titlePanel("Welcome to the Department of Biostatistics", windowTitle = "Office Directory"),
+  shinyjs::useShinyjs(),
+  titlePanel("Welcome to the Department of Biostatistics", windowTitle = "Office Directory"),
 	fluidRow(
-		column(width=5,h4(uiOutput("nameOutput"))),
-		column(width=6,h4(tableOutput("results")))
+	  column(width=3,h4(uiOutput("nameOutput"))),
+	  column(width=6,h4(tableOutput("results")))
+	  ,column(width=1,actionButton("reset", "Reset"))
 	),
-	#hr(),
 	plotOutput("pic1")
-
 )
-
-
+#
+# server
+#
 server <- function(input, output) {
 
 	output$nameOutput <- renderUI({
@@ -35,36 +38,17 @@ server <- function(input, output) {
 		filtered()
 	})
 
-	#output$pic1 <- renderImage ({
-	#	picfile <- "images/floorplan60a.jpg"
-	#	list(src=picfile,
-	#	alt="This is a picture")
-	#}, 
-	#deleteFile=FALSE)
-	
-#	output$pic1 <- 
-#	  renderImage({
-#	    filename <- normalizePath(file.path('./images',paste(input$nameInput, '.jpg', sep='')))
-#		# Return a list containing the filename
-#   		list(src = filename,alt="This is a picture")
-#    }, deleteFile = FALSE)
-#	reactive({
-#	if (is.na(input$nameInput)) {
-#	  filename <- "./images/floorplan60a.jpg"
-#	  print(filename)
-#	} else {
-#	  filename <- normalizePath(file.path('./images',paste(input$nameInput, '.jpg', sep='')))
-#	  print(filename)
-#	}
-#	})
-	
 	output$pic1 <- 
 	  renderImage({
 	    filename <- normalizePath(file.path('./images',paste(input$nameInput, '.jpg', sep='')))
 	    # Return a list containing the filename
 	    list(src = filename,alt="This is a picture")
 	  }, deleteFile = FALSE)
-
+	
+	observeEvent(input$reset, {
+	  shinyjs::reset("nameOutput")
+	})
+	
 }
     
 shinyApp(ui = ui, server = server)
