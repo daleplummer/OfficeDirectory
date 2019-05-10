@@ -2,7 +2,7 @@ library(shiny)
 library(dplyr)
 
 # file has columns: id, name, location, phone
-od <- read.csv("OfficeDirectory.csv", stringsAsFactors = FALSE)
+od <- read.csv("OfficeDirectory2525.csv", stringsAsFactors = FALSE)
 print(od)
 #
 # ui
@@ -12,8 +12,8 @@ ui <- fluidPage(
   titlePanel("Welcome to the Department of Biostatistics", windowTitle = "Office Directory"),
 	fluidRow(
 	  column(width=3,h4(uiOutput("nameOutput"))),
-	  column(width=6,h4(tableOutput("results")))
-	  ,column(width=1,actionButton("reset", "Reset"))
+	  column(width=6,h4(tableOutput("results"))),
+	  column(width=1,actionButton("reset", "Reset"))
 	),
 	plotOutput("pic1")
 )
